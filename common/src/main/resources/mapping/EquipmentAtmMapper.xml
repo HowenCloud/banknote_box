@@ -1,0 +1,387 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ixilink.banknote_box.common.dao.EquipmentAtmMapper">
+  <resultMap id="BaseResultMap" type="com.ixilink.banknote_box.common.pojo.EquipmentAtm">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="controller_id" jdbcType="INTEGER" property="controllerId" />
+    <result column="number" jdbcType="VARCHAR" property="number" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="channel" jdbcType="VARCHAR" property="channel" />
+    <result column="passageway" jdbcType="INTEGER" property="passageway" />
+    <result column="box_type" jdbcType="INTEGER" property="boxType" />
+    <result column="state" jdbcType="INTEGER" property="state" />
+    <result column="library_id" jdbcType="INTEGER" property="libraryId" />
+    <result column="box1" jdbcType="INTEGER" property="box1" />
+    <result column="box2" jdbcType="INTEGER" property="box2" />
+    <result column="box3" jdbcType="INTEGER" property="box3" />
+    <result column="box4" jdbcType="INTEGER" property="box4" />
+    <result column="box5" jdbcType="INTEGER" property="box5" />
+    <result column="bankBranch" jdbcType="VARCHAR" property="bankBranch" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, controller_id, number, name, channel, passageway, box_type, state, library_id, 
+    box1, box2, box3, box4, box5
+  </sql>
+  <select id="selectByExample" parameterType="com.ixilink.banknote_box.common.pojo.EquipmentAtmExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from equipment_atm
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+    <if test="limitStart != null and limitStart >= 0">
+      limit ${limitStart} , ${count}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from equipment_atm
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from equipment_atm
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.ixilink.banknote_box.common.pojo.EquipmentAtmExample">
+    delete from equipment_atm
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.ixilink.banknote_box.common.pojo.EquipmentAtm">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into equipment_atm (controller_id, number, name, 
+      channel, passageway, box_type, 
+      state, library_id, box1, 
+      box2, box3, box4, box5
+      )
+    values (#{controllerId,jdbcType=INTEGER}, #{number,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
+      #{channel,jdbcType=VARCHAR}, #{passageway,jdbcType=INTEGER}, #{boxType,jdbcType=INTEGER},
+      #{state,jdbcType=INTEGER}, #{libraryId,jdbcType=INTEGER}, #{box1,jdbcType=INTEGER}, 
+      #{box2,jdbcType=INTEGER}, #{box3,jdbcType=INTEGER}, #{box4,jdbcType=INTEGER}, #{box5,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.ixilink.banknote_box.common.pojo.EquipmentAtm">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into equipment_atm
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="controllerId != null">
+        controller_id,
+      </if>
+      <if test="number != null">
+        number,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="channel != null">
+        channel,
+      </if>
+      <if test="passageway != null">
+        passageway,
+      </if>
+      <if test="boxType != null">
+        box_type,
+      </if>
+      <if test="state != null">
+        state,
+      </if>
+      <if test="libraryId != null">
+        library_id,
+      </if>
+      <if test="box1 != null">
+        box1,
+      </if>
+      <if test="box2 != null">
+        box2,
+      </if>
+      <if test="box3 != null">
+        box3,
+      </if>
+      <if test="box4 != null">
+        box4,
+      </if>
+      <if test="box5 != null">
+        box5,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="controllerId != null">
+        #{controllerId,jdbcType=INTEGER},
+      </if>
+      <if test="number != null">
+        #{number,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="channel != null">
+        #{channel,jdbcType=VARCHAR},
+      </if>
+      <if test="passageway != null">
+        #{passageway,jdbcType=INTEGER},
+      </if>
+      <if test="boxType != null">
+        #{boxType,jdbcType=INTEGER},
+      </if>
+      <if test="state != null">
+        #{state,jdbcType=INTEGER},
+      </if>
+      <if test="libraryId != null">
+        #{libraryId,jdbcType=INTEGER},
+      </if>
+      <if test="box1 != null">
+        #{box1,jdbcType=INTEGER},
+      </if>
+      <if test="box2 != null">
+        #{box2,jdbcType=INTEGER},
+      </if>
+      <if test="box3 != null">
+        #{box3,jdbcType=INTEGER},
+      </if>
+      <if test="box4 != null">
+        #{box4,jdbcType=INTEGER},
+      </if>
+      <if test="box5 != null">
+        #{box5,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.ixilink.banknote_box.common.pojo.EquipmentAtmExample" resultType="java.lang.Long">
+    select count(*) from equipment_atm
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update equipment_atm
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.controllerId != null">
+        controller_id = #{record.controllerId,jdbcType=INTEGER},
+      </if>
+      <if test="record.number != null">
+        number = #{record.number,jdbcType=VARCHAR},
+      </if>
+      <if test="record.name != null">
+        name = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.channel != null">
+        channel = #{record.channel,jdbcType=VARCHAR},
+      </if>
+      <if test="record.passageway != null">
+        passageway = #{record.passageway,jdbcType=INTEGER},
+      </if>
+      <if test="record.boxType != null">
+        box_type = #{record.boxType,jdbcType=INTEGER},
+      </if>
+      <if test="record.state != null">
+        state = #{record.state,jdbcType=INTEGER},
+      </if>
+      <if test="record.libraryId != null">
+        library_id = #{record.libraryId,jdbcType=INTEGER},
+      </if>
+      <if test="record.box1 != null">
+        box1 = #{record.box1,jdbcType=INTEGER},
+      </if>
+      <if test="record.box2 != null">
+        box2 = #{record.box2,jdbcType=INTEGER},
+      </if>
+      <if test="record.box3 != null">
+        box3 = #{record.box3,jdbcType=INTEGER},
+      </if>
+      <if test="record.box4 != null">
+        box4 = #{record.box4,jdbcType=INTEGER},
+      </if>
+      <if test="record.box5 != null">
+        box5 = #{record.box5,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update equipment_atm
+    set id = #{record.id,jdbcType=INTEGER},
+      controller_id = #{record.controllerId,jdbcType=INTEGER},
+      number = #{record.number,jdbcType=VARCHAR},
+      name = #{record.name,jdbcType=VARCHAR},
+      channel = #{record.channel,jdbcType=VARCHAR},
+      passageway = #{record.passageway,jdbcType=INTEGER},
+      box_type = #{record.boxType,jdbcType=INTEGER},
+      state = #{record.state,jdbcType=INTEGER},
+      library_id = #{record.libraryId,jdbcType=INTEGER},
+      box1 = #{record.box1,jdbcType=INTEGER},
+      box2 = #{record.box2,jdbcType=INTEGER},
+      box3 = #{record.box3,jdbcType=INTEGER},
+      box4 = #{record.box4,jdbcType=INTEGER},
+      box5 = #{record.box5,jdbcType=INTEGER}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ixilink.banknote_box.common.pojo.EquipmentAtm">
+    update equipment_atm
+    <set>
+      <if test="controllerId != null">
+        controller_id = #{controllerId,jdbcType=INTEGER},
+      </if>
+      <if test="number != null">
+        number = #{number,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="channel != null">
+        channel = #{channel,jdbcType=VARCHAR},
+      </if>
+      <if test="passageway != null">
+        passageway = #{passageway,jdbcType=INTEGER},
+      </if>
+      <if test="boxType != null">
+        box_type = #{boxType,jdbcType=INTEGER},
+      </if>
+      <if test="state != null">
+        state = #{state,jdbcType=INTEGER},
+      </if>
+      <if test="libraryId != null">
+        library_id = #{libraryId,jdbcType=INTEGER},
+      </if>
+      <if test="box1 != null">
+        box1 = #{box1,jdbcType=INTEGER},
+      </if>
+      <if test="box2 != null">
+        box2 = #{box2,jdbcType=INTEGER},
+      </if>
+      <if test="box3 != null">
+        box3 = #{box3,jdbcType=INTEGER},
+      </if>
+      <if test="box4 != null">
+        box4 = #{box4,jdbcType=INTEGER},
+      </if>
+      <if test="box5 != null">
+        box5 = #{box5,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ixilink.banknote_box.common.pojo.EquipmentAtm">
+    update equipment_atm
+    set controller_id = #{controllerId,jdbcType=INTEGER},
+      number = #{number,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      channel = #{channel,jdbcType=VARCHAR},
+      passageway = #{passageway,jdbcType=INTEGER},
+      box_type = #{boxType,jdbcType=INTEGER},
+      state = #{state,jdbcType=INTEGER},
+      library_id = #{libraryId,jdbcType=INTEGER},
+      box1 = #{box1,jdbcType=INTEGER},
+      box2 = #{box2,jdbcType=INTEGER},
+      box3 = #{box3,jdbcType=INTEGER},
+      box4 = #{box4,jdbcType=INTEGER},
+      box5 = #{box5,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <insert id="insertList" parameterType="java.util.List">
+    insert into equipment_atm (controller_id, number, name, channel, passageway, box_type, library_id) value
+    <foreach collection="list" item="r" separator="," close=";">
+      (#{r.controllerId,jdbcType=INTEGER}, #{r.number,jdbcType=VARCHAR}, #{r.name,jdbcType=VARCHAR}, #{r.channel,jdbcType=VARCHAR}, #{r.passageway,jdbcType=INTEGER}, #{r.boxType,jdbcType=INTEGER}, #{r.libraryId,jdbcType=INTEGER} )
+    </foreach>
+  </insert>
+
+  <select id="getAtm" resultMap="BaseResultMap">
+    SELECT ea.id, ea.controller_id, ea.number, ea.name, ea.channel, ea.passageway, ea.state, e.`name` bankBranch FROM equipment_atm ea,equipment e
+    WHERE ea.`controller_id`=e.`id` AND ea.`state`=1 AND e.`state`=1
+    <if test="libraryId != null">
+      and e.`library_id` like #{libraryId}
+    </if>
+    <if test="bankBranch != null">
+      and e.`name` like #{bankBranch}
+    </if>
+    <if test="number != null">
+      and ea.number like #{number}
+    </if>
+    order by ea.id
+  </select>
+
+  <select id="getBankBranchAndAtmId" resultType="java.util.Map">
+    SELECT ea.`id`,e.`name` as bankBranch FROM equipment_atm ea
+    LEFT JOIN equipment e ON e.`id`=ea.`controller_id`
+    WHERE ea.`number`=#{number} AND ea.`channel`=#{channel} AND ea.`state`=1
+  </select>
+
+</mapper>

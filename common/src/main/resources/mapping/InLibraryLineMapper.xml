@@ -1,0 +1,429 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ixilink.banknote_box.common.dao.InLibraryLineMapper">
+  <resultMap id="BaseResultMap" type="com.ixilink.banknote_box.common.pojo.InLibraryLine">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="task_id" jdbcType="INTEGER" property="taskId" />
+    <result column="line_name" jdbcType="VARCHAR" property="lineName" />
+    <result column="total_box" jdbcType="INTEGER" property="totalBox" />
+    <result column="check_state" jdbcType="INTEGER" property="checkState" />
+    <result column="face_state" jdbcType="INTEGER" property="faceState" />
+    <result column="line_state" jdbcType="INTEGER" property="lineState" />
+    <result column="library_id" jdbcType="INTEGER" property="libraryId" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.ixilink.banknote_box.common.pojo.InLibraryLine">
+    <result column="normal_result" jdbcType="LONGVARCHAR" property="normalResult" />
+    <result column="inventory_result" jdbcType="LONGVARCHAR" property="inventoryResult" />
+    <result column="supplement_result" jdbcType="LONGVARCHAR" property="supplementResult" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, task_id, line_name, total_box, check_state, face_state, line_state, library_id
+  </sql>
+  <sql id="Blob_Column_List">
+    normal_result, inventory_result, supplement_result
+  </sql>
+  <select id="selectByExampleWithBLOBs" parameterType="com.ixilink.banknote_box.common.pojo.InLibraryLineExample" resultMap="ResultMapWithBLOBs">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from in_library_line
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+    <if test="limitStart != null and limitStart >= 0">
+      limit ${limitStart} , ${count}
+    </if>
+  </select>
+  <select id="selectByExample" parameterType="com.ixilink.banknote_box.common.pojo.InLibraryLineExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from in_library_line
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+    <if test="limitStart != null and limitStart >= 0">
+      limit ${limitStart} , ${count}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from in_library_line
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from in_library_line
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.ixilink.banknote_box.common.pojo.InLibraryLineExample">
+    delete from in_library_line
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.ixilink.banknote_box.common.pojo.InLibraryLine">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into in_library_line (task_id, line_name, total_box, 
+      check_state, face_state, line_state, 
+      library_id, normal_result, inventory_result, 
+      supplement_result)
+    values (#{taskId,jdbcType=INTEGER}, #{lineName,jdbcType=VARCHAR}, #{totalBox,jdbcType=INTEGER}, 
+      #{checkState,jdbcType=INTEGER}, #{faceState,jdbcType=INTEGER}, #{lineState,jdbcType=INTEGER}, 
+      #{libraryId,jdbcType=INTEGER}, #{normalResult,jdbcType=LONGVARCHAR}, #{inventoryResult,jdbcType=LONGVARCHAR}, 
+      #{supplementResult,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ixilink.banknote_box.common.pojo.InLibraryLine">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into in_library_line
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="taskId != null">
+        task_id,
+      </if>
+      <if test="lineName != null">
+        line_name,
+      </if>
+      <if test="totalBox != null">
+        total_box,
+      </if>
+      <if test="checkState != null">
+        check_state,
+      </if>
+      <if test="faceState != null">
+        face_state,
+      </if>
+      <if test="lineState != null">
+        line_state,
+      </if>
+      <if test="libraryId != null">
+        library_id,
+      </if>
+      <if test="normalResult != null">
+        normal_result,
+      </if>
+      <if test="inventoryResult != null">
+        inventory_result,
+      </if>
+      <if test="supplementResult != null">
+        supplement_result,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="taskId != null">
+        #{taskId,jdbcType=INTEGER},
+      </if>
+      <if test="lineName != null">
+        #{lineName,jdbcType=VARCHAR},
+      </if>
+      <if test="totalBox != null">
+        #{totalBox,jdbcType=INTEGER},
+      </if>
+      <if test="checkState != null">
+        #{checkState,jdbcType=INTEGER},
+      </if>
+      <if test="faceState != null">
+        #{faceState,jdbcType=INTEGER},
+      </if>
+      <if test="lineState != null">
+        #{lineState,jdbcType=INTEGER},
+      </if>
+      <if test="libraryId != null">
+        #{libraryId,jdbcType=INTEGER},
+      </if>
+      <if test="normalResult != null">
+        #{normalResult,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="inventoryResult != null">
+        #{inventoryResult,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="supplementResult != null">
+        #{supplementResult,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.ixilink.banknote_box.common.pojo.InLibraryLineExample" resultType="java.lang.Long">
+    select count(*) from in_library_line
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update in_library_line
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.taskId != null">
+        task_id = #{record.taskId,jdbcType=INTEGER},
+      </if>
+      <if test="record.lineName != null">
+        line_name = #{record.lineName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.totalBox != null">
+        total_box = #{record.totalBox,jdbcType=INTEGER},
+      </if>
+      <if test="record.checkState != null">
+        check_state = #{record.checkState,jdbcType=INTEGER},
+      </if>
+      <if test="record.faceState != null">
+        face_state = #{record.faceState,jdbcType=INTEGER},
+      </if>
+      <if test="record.lineState != null">
+        line_state = #{record.lineState,jdbcType=INTEGER},
+      </if>
+      <if test="record.libraryId != null">
+        library_id = #{record.libraryId,jdbcType=INTEGER},
+      </if>
+      <if test="record.normalResult != null">
+        normal_result = #{record.normalResult,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.inventoryResult != null">
+        inventory_result = #{record.inventoryResult,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.supplementResult != null">
+        supplement_result = #{record.supplementResult,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map">
+    update in_library_line
+    set id = #{record.id,jdbcType=INTEGER},
+      task_id = #{record.taskId,jdbcType=INTEGER},
+      line_name = #{record.lineName,jdbcType=VARCHAR},
+      total_box = #{record.totalBox,jdbcType=INTEGER},
+      check_state = #{record.checkState,jdbcType=INTEGER},
+      face_state = #{record.faceState,jdbcType=INTEGER},
+      line_state = #{record.lineState,jdbcType=INTEGER},
+      library_id = #{record.libraryId,jdbcType=INTEGER},
+      normal_result = #{record.normalResult,jdbcType=LONGVARCHAR},
+      inventory_result = #{record.inventoryResult,jdbcType=LONGVARCHAR},
+      supplement_result = #{record.supplementResult,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update in_library_line
+    set id = #{record.id,jdbcType=INTEGER},
+      task_id = #{record.taskId,jdbcType=INTEGER},
+      line_name = #{record.lineName,jdbcType=VARCHAR},
+      total_box = #{record.totalBox,jdbcType=INTEGER},
+      check_state = #{record.checkState,jdbcType=INTEGER},
+      face_state = #{record.faceState,jdbcType=INTEGER},
+      line_state = #{record.lineState,jdbcType=INTEGER},
+      library_id = #{record.libraryId,jdbcType=INTEGER}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ixilink.banknote_box.common.pojo.InLibraryLine">
+    update in_library_line
+    <set>
+      <if test="taskId != null">
+        task_id = #{taskId,jdbcType=INTEGER},
+      </if>
+      <if test="lineName != null">
+        line_name = #{lineName,jdbcType=VARCHAR},
+      </if>
+      <if test="totalBox != null">
+        total_box = #{totalBox,jdbcType=INTEGER},
+      </if>
+      <if test="checkState != null">
+        check_state = #{checkState,jdbcType=INTEGER},
+      </if>
+      <if test="faceState != null">
+        face_state = #{faceState,jdbcType=INTEGER},
+      </if>
+      <if test="lineState != null">
+        line_state = #{lineState,jdbcType=INTEGER},
+      </if>
+      <if test="libraryId != null">
+        library_id = #{libraryId,jdbcType=INTEGER},
+      </if>
+      <if test="normalResult != null">
+        normal_result = #{normalResult,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="inventoryResult != null">
+        inventory_result = #{inventoryResult,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="supplementResult != null">
+        supplement_result = #{supplementResult,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.ixilink.banknote_box.common.pojo.InLibraryLine">
+    update in_library_line
+    set task_id = #{taskId,jdbcType=INTEGER},
+      line_name = #{lineName,jdbcType=VARCHAR},
+      total_box = #{totalBox,jdbcType=INTEGER},
+      check_state = #{checkState,jdbcType=INTEGER},
+      face_state = #{faceState,jdbcType=INTEGER},
+      line_state = #{lineState,jdbcType=INTEGER},
+      library_id = #{libraryId,jdbcType=INTEGER},
+      normal_result = #{normalResult,jdbcType=LONGVARCHAR},
+      inventory_result = #{inventoryResult,jdbcType=LONGVARCHAR},
+      supplement_result = #{supplementResult,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ixilink.banknote_box.common.pojo.InLibraryLine">
+    update in_library_line
+    set task_id = #{taskId,jdbcType=INTEGER},
+      line_name = #{lineName,jdbcType=VARCHAR},
+      total_box = #{totalBox,jdbcType=INTEGER},
+      check_state = #{checkState,jdbcType=INTEGER},
+      face_state = #{faceState,jdbcType=INTEGER},
+      line_state = #{lineState,jdbcType=INTEGER},
+      library_id = #{libraryId,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <select id="findLine" resultType="java.util.Map">
+    SELECT id,line_name,total_box,normal_result normalResult,username,atmCount,overCount,checkState,lineState FROM
+    (SELECT ill.id,ill.`line_name`,ill.`total_box`,ill.`normal_result`,GROUP_CONCAT(u.`name` SEPARATOR ",") AS username,c.atmCount,c.overCount,ill.`check_state` checkState,ill.`line_state` lineState FROM in_library_line ill
+    LEFT JOIN out_library_line_user ollu ON ill.`id`=ollu.`line_id`
+    LEFT JOIN USER u ON ollu.`user_id`=u.`id`
+    LEFT JOIN (SELECT line_id, COUNT(*)atmCount,SUM(CASE WHEN out_library_line_atm.`schedule` > 0 THEN 1 ELSE 0 END)overCount FROM out_library_line_atm WHERE state=1 AND library_id=#{libraryId} GROUP BY line_id)c ON ill.`id`=c.line_id
+    WHERE ill.library_id = #{libraryId}
+    AND ill.`task_id`= #{taskId} AND ill.`id` IN (SELECT distinct`line_id` FROM out_library_line_user
+    <if test="users != null">
+      WHERE `user_id`IN
+      <foreach collection="users" item="u" open="(" separator="," close=")">
+        #{u}
+      </foreach>
+    </if>)
+    GROUP BY ill.`id`)t
+    ORDER BY checkState,lineState
+  </select>
+
+  <select id="findAtm" resultType="java.util.Map">
+    SELECT olla.id, olla.line_id lineId, olla.atm_id atmId, olla.schedule, olla.supplement_box supplementBox, olla.deposit_box depositBox, olla.take_box takeBox, olla.original_take_box originalTakeBox,
+    equipment_atm.`number`,equipment_atm.`name`,equipment_atm.`channel`
+    FROM out_library_line_atm olla
+    LEFT JOIN equipment_atm ON equipment_atm.`id` = olla.`atm_id`
+    WHERE olla.`schedule`>0 AND olla.`line_id` = #{lineId}
+    <if test="number != null">
+      and equipment_atm.`number` like #{number}
+    </if>
+    ORDER BY olla.schedule
+  </select>
+
+  <select id="findNoDepositAtm" resultType="java.util.Map">
+    SELECT olla.id, olla.line_id lineId, olla.atm_id atmId, olla.schedule, olla.total_box totalBox, olla.supplement_box supplementBox, olla.deposit_box depositBox,
+    equipment_atm.`number`,equipment_atm.`name`,equipment_atm.`channel`
+    FROM out_library_line_atm olla
+    LEFT JOIN equipment_atm ON equipment_atm.`id` = olla.`atm_id`
+    WHERE olla.`schedule`=0 AND olla.`line_id` = #{lineId}
+    <if test="number != null">
+      and equipment_atm.`number` like #{number}
+    </if>
+    ORDER BY olla.schedule
+  </select>
+
+
+  <select id="findNoDepositBox" resultType="java.util.Map">
+    SELECT id,serial_number number,box_type boxType,site,box_use_state boxUseState,box_transport_state boxTransportState,active_rfid activeRfid,
+    passive_rfid passiveRfid,create_time createTime,state,library_id libraryId,car_money money  FROM car_box
+    WHERE 1=1
+    <if test="type != null">
+      and box_type in (#{type},#{type}+1)
+    </if>
+    <if test="number != null">
+      and serial_number like #{number}
+    </if>
+    <if test="numbers != null">
+      and serial_number IN
+      <foreach collection="numbers" item="num" open="(" separator="," close=")">
+        #{num}
+      </foreach>
+    </if>
+  </select>
+
+</mapper>

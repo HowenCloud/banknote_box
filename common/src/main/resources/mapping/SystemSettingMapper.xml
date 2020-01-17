@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ixilink.banknote_box.common.dao.SystemSettingMapper">
+  <resultMap id="BaseResultMap" type="com.ixilink.banknote_box.common.pojo.SystemSetting">
+    <id column="library_id" jdbcType="INTEGER" property="libraryId" />
+    <result column="assignments_reader_writer_ip" jdbcType="VARCHAR" property="assignmentsReaderWriterIp" />
+    <result column="handover_reader_writer_ip" jdbcType="VARCHAR" property="handoverReaderWriterIp" />
+    <result column="assignments_amera_ip" jdbcType="VARCHAR" property="assignmentsAmeraIp" />
+    <result column="handover_amera_ip" jdbcType="VARCHAR" property="handoverAmeraIp" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    library_id, assignments_reader_writer_ip, handover_reader_writer_ip, assignments_amera_ip, 
+    handover_amera_ip
+  </sql>
+  <select id="selectByExample" parameterType="com.ixilink.banknote_box.common.pojo.SystemSettingExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from system_setting
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+    <if test="limitStart != null and limitStart >= 0">
+      limit ${limitStart} , ${count}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from system_setting
+    where library_id = #{libraryId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from system_setting
+    where library_id = #{libraryId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.ixilink.banknote_box.common.pojo.SystemSettingExample">
+    delete from system_setting
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.ixilink.banknote_box.common.pojo.SystemSetting">
+    insert into system_setting (library_id, assignments_reader_writer_ip, 
+      handover_reader_writer_ip, assignments_amera_ip, 
+      handover_amera_ip)
+    values (#{libraryId,jdbcType=INTEGER}, #{assignmentsReaderWriterIp,jdbcType=VARCHAR}, 
+      #{handoverReaderWriterIp,jdbcType=VARCHAR}, #{assignmentsAmeraIp,jdbcType=VARCHAR}, 
+      #{handoverAmeraIp,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ixilink.banknote_box.common.pojo.SystemSetting">
+    insert into system_setting
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="libraryId != null">
+        library_id,
+      </if>
+      <if test="assignmentsReaderWriterIp != null">
+        assignments_reader_writer_ip,
+      </if>
+      <if test="handoverReaderWriterIp != null">
+        handover_reader_writer_ip,
+      </if>
+      <if test="assignmentsAmeraIp != null">
+        assignments_amera_ip,
+      </if>
+      <if test="handoverAmeraIp != null">
+        handover_amera_ip,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="libraryId != null">
+        #{libraryId,jdbcType=INTEGER},
+      </if>
+      <if test="assignmentsReaderWriterIp != null">
+        #{assignmentsReaderWriterIp,jdbcType=VARCHAR},
+      </if>
+      <if test="handoverReaderWriterIp != null">
+        #{handoverReaderWriterIp,jdbcType=VARCHAR},
+      </if>
+      <if test="assignmentsAmeraIp != null">
+        #{assignmentsAmeraIp,jdbcType=VARCHAR},
+      </if>
+      <if test="handoverAmeraIp != null">
+        #{handoverAmeraIp,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.ixilink.banknote_box.common.pojo.SystemSettingExample" resultType="java.lang.Long">
+    select count(*) from system_setting
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update system_setting
+    <set>
+      <if test="record.libraryId != null">
+        library_id = #{record.libraryId,jdbcType=INTEGER},
+      </if>
+      <if test="record.assignmentsReaderWriterIp != null">
+        assignments_reader_writer_ip = #{record.assignmentsReaderWriterIp,jdbcType=VARCHAR},
+      </if>
+      <if test="record.handoverReaderWriterIp != null">
+        handover_reader_writer_ip = #{record.handoverReaderWriterIp,jdbcType=VARCHAR},
+      </if>
+      <if test="record.assignmentsAmeraIp != null">
+        assignments_amera_ip = #{record.assignmentsAmeraIp,jdbcType=VARCHAR},
+      </if>
+      <if test="record.handoverAmeraIp != null">
+        handover_amera_ip = #{record.handoverAmeraIp,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update system_setting
+    set library_id = #{record.libraryId,jdbcType=INTEGER},
+      assignments_reader_writer_ip = #{record.assignmentsReaderWriterIp,jdbcType=VARCHAR},
+      handover_reader_writer_ip = #{record.handoverReaderWriterIp,jdbcType=VARCHAR},
+      assignments_amera_ip = #{record.assignmentsAmeraIp,jdbcType=VARCHAR},
+      handover_amera_ip = #{record.handoverAmeraIp,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ixilink.banknote_box.common.pojo.SystemSetting">
+    update system_setting
+    <set>
+      <if test="assignmentsReaderWriterIp != null">
+        assignments_reader_writer_ip = #{assignmentsReaderWriterIp,jdbcType=VARCHAR},
+      </if>
+      <if test="handoverReaderWriterIp != null">
+        handover_reader_writer_ip = #{handoverReaderWriterIp,jdbcType=VARCHAR},
+      </if>
+      <if test="assignmentsAmeraIp != null">
+        assignments_amera_ip = #{assignmentsAmeraIp,jdbcType=VARCHAR},
+      </if>
+      <if test="handoverAmeraIp != null">
+        handover_amera_ip = #{handoverAmeraIp,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where library_id = #{libraryId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ixilink.banknote_box.common.pojo.SystemSetting">
+    update system_setting
+    set assignments_reader_writer_ip = #{assignmentsReaderWriterIp,jdbcType=VARCHAR},
+      handover_reader_writer_ip = #{handoverReaderWriterIp,jdbcType=VARCHAR},
+      assignments_amera_ip = #{assignmentsAmeraIp,jdbcType=VARCHAR},
+      handover_amera_ip = #{handoverAmeraIp,jdbcType=VARCHAR}
+    where library_id = #{libraryId,jdbcType=INTEGER}
+  </update>
+</mapper>

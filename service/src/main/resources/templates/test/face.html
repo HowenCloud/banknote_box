@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>视频播放</title>
+    <script type="text/javascript" src="wfs.js"></script>
+    <style>
+        #message{
+            height: 520px;
+            border-bottom: 1px solid gray;
+            padding: 20px 30px;
+        }
+        #container{
+            margin: 0 auto;
+            width: 720px;
+            border: 1px solid gray
+        }
+        input{
+            width: 300px;
+            height: 36px;
+            border: 1px solid gray;
+            background:none;
+            outline:none;
+        }
+        input:focus{
+            border-color: yellow;
+        }
+        button{
+            height: 36px;
+        }
+    </style>
+    <script type="text/javascript">
+        var wfs = null;
+
+        function play() {
+            if (Wfs.isSupported()) {
+
+                var video1 = document.getElementById("video1");
+                wfs = new Wfs();
+                wfs.attachMedia(video1, 'ch1', 'H264Raw', "ws://10.0.0.188:8300/message/videoSocket/0123B8-6BD664-3650EE");
+
+            } else {
+                window.alert('浏览器不支持！\n支持win8/win10的ie11(需安装更新)和edge\n支持chrome/safari/firefox等较新版本\n如果使用360等多内核浏览器，请保持更新并切换极速模式');
+            }
+        }
+        function stop() {
+            if(!!wfs)
+                wfs.destroy();
+        }
+        play();
+    </script>
+</head>
+<body>
+<div class="wfsjs">
+    <video id="video1" width="640" height="480"></video>
+</div>
+
+<video autoplay id="sourcevid" style="width:1600px;height:900px"></video>
+<canvas id="output" style="display:none"></canvas>
+<!--<img src="" id="receiver" style="width:1600px;height:900px"/>-->
+
+<script th:inline="javascript"  type="text/javascript" charset="utf-8">
+
+    /*//创建一个+实例
+    var socket = new WebSocket("ws://10.0.0.188:8300/message/videoSocket/0123B8-6BD664-3650EE");
+    var back = document.getElementById('output');
+
+    //返回一个用于在画布上绘图的环境。
+    var backcontext = back.getContext('2d');
+    var video = document.getElementsByTagName('video')[0];
+
+    var success = function(stream){
+        //获取视屏流，转换为url
+        video.src = window.URL.createObjectURL(stream);
+    };
+
+    //打开socket
+    socket.onopen = function(){
+        draw();
+        console.log("open success")
+    };
+
+    // 将视频帧绘制到Canvas对象上,Canvas每100ms切换帧，形成肉眼视频效果
+    var draw = function(){
+        try{
+            backcontext.drawImage(video,0,0, back.width, back.height);
+        }catch(e){
+            if (e.name == "NS_ERROR_NOT_AVAILABLE") {
+                return setTimeout(draw, 100);
+            } else {
+                throw e;
+            }
+        }
+
+        if(video.src){
+            // Canvas的内容转化成PNG data URI并发送到服务器，0.5为和压缩系数
+            socket.send(back.toDataURL("image/jpeg", 0.5));
+        }
+        setTimeout(draw, 100);
+    };
+
+    //调用设备的摄像头,并将资源放入video标签
+    navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia;
+    navigator.getUserMedia({video:true, audio:false}, success, console.log);*/
+
+
+    /*
+    var websocket = null;//判断当前浏览器是否支持WebSocket
+    if ('WebSocket' in window) {
+        websocket = new WebSocket("ws://10.0.0.188:8300/message/videoSocket/0123B8-6BD664-3650EE");
+    }
+    else {
+        alert('当前浏览器不支持websocket');
+    }
+
+    //接收到消息的回调方法
+    websocket.onmessage = function (event) {
+        // console.log(event);
+        var data = event.data;
+        console.log(data);
+        var video = document.getElementsByTagName('video')[0];
+        video.src = window.URL.createObjectURL(data);
+        // var image = document.getElementById('receiver');
+        // image.src=event.data;
+    };
+
+    //连接成功建立的回调方法
+    websocket.onopen = function () {
+        console.log("onopen...");
+    };
+    //连接关闭的回调方法
+    websocket.onclose = function () {
+        console.log("onclose...");
+    };
+    //连接发生错误的回调方法
+    websocket.onerror = function () {
+        console.log("onerror...");
+    };
+    //监听窗口关闭事件，当窗口关闭时，主动去关闭websocket连接，防止连接还没断开就关闭窗口，server端会抛异常。
+    window.onbeforeunload = function () {
+        closeWebSocket();
+    };
+    //关闭WebSocket连接
+    function closeWebSocket() {
+        websocket.close();
+    }*/
+
+</script>
+</body>
+</html>

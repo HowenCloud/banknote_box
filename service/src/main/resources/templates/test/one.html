@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<!--<html xmlns:th="http://www.thymeleaf.org" >-->
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+
+<head>
+    <meta charset="UTF-8">
+    <title>one</title>
+    <script type="text/javascript" src="../jquery/jquery-1.11.1.min.js"></script>
+    <script type="text/javascript" src="../jquery/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="../aes/aes.js"></script>
+    <script type="text/javascript" src="../aes/mode-ecb-min.js"></script>
+</head>
+你好！测试页面
+<div id="token" hidden="hidden" th:name="token">[[${session.SESSION_LOGIN_TOKEN}]]</div>
+<!--<img id="process" width="100%" src="https://localhost/images/123.png">-->
+<!--<img id="processImg" width="100%" src="https://10.0.0.188/find?id=456.png&token=4kkjXV3LF0oOPsWR">-->
+<img id="processImg" src="">
+<body>
+</body>
+<script>
+    window.onload = function () {
+        var key = $('#token').text();
+        console.log("key："+key);
+        var token = CryptoJS.enc.Utf8.parse(key);
+        console.log("token："+token);
+        var img = "123.png";
+        console.log("img："+img);
+        img = CryptoJS.enc.Utf8.parse(img);
+        console.log("img："+img);
+        var encrypted = CryptoJS.AES.encrypt(img, token, {mode:CryptoJS.mode.ECB,padding: CryptoJS.pad.Pkcs7});
+        var id = encrypted.toString();
+        id = id.replace(/\+/g, '%2B');
+        console.log("id："+id);
+        // $("#processImg").attr("src","https://10.0.0.188/find?id="+id+"&token="+token+"&key="+key+"&r="+Math.random());
+        $("#processImg").attr("src","http://10.0.0.188:8100/images?id="+id);
+    };
+</script>
+</html>

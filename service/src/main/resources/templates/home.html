@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <meta charset="UTF-8">
+    <title>首页</title>
+    <script type="text/javascript" src="../jquery/jquery-1.11.1.min.js"></script>
+    <script type="text/javascript" src="../jquery/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="../aes/aes.js"></script>
+    <script type="text/javascript" src="../aes/mode-ecb-min.js"></script>
+</head>
+<body>
+你好！
+<div th:if="${session.SESSION_USER}==null">陌生人</div>
+<div th:if="${session.SESSION_USER}!=null">[[${session.SESSION_USER.name}]]</div>
+欢迎来到首页
+<br>
+<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=506009775&auto=1&height=66"></iframe><br>
+</body>
+</html>

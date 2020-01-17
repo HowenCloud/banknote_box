@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ixilink.banknote_box.common.dao.ReadyMoneyLibraryerMapper">
+  <insert id="insertSelective" parameterType="com.ixilink.banknote_box.common.pojo.ReadyMoneyLibraryer">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into ready_money_libraryer
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="libraryerId != null">
+        libraryer_id,
+      </if>
+      <if test="inLibraryTime != null">
+        in_library_time,
+      </if>
+      <if test="outLibraryTime != null">
+        out_library_time,
+      </if>
+      <if test="state != null">
+        state,
+      </if>
+      <if test="detailsId != null">
+        details_id,
+      </if>
+      <if test="handOverPeopleId != null">
+        hand_over_people_id,
+      </if>
+      <if test="libraryId != null">
+        library_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="libraryerId != null">
+        #{libraryerId,jdbcType=VARCHAR},
+      </if>
+      <if test="inLibraryTime != null">
+        #{inLibraryTime,jdbcType=BIGINT},
+      </if>
+      <if test="outLibraryTime != null">
+        #{outLibraryTime,jdbcType=BIGINT},
+      </if>
+      <if test="state != null">
+        #{state,jdbcType=INTEGER},
+      </if>
+      <if test="detailsId != null">
+        #{detailsId,jdbcType=INTEGER},
+      </if>
+      <if test="handOverPeopleId != null">
+        #{handOverPeopleId,jdbcType=VARCHAR},
+      </if>
+      <if test="libraryId != null">
+        #{libraryId,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+</mapper>
